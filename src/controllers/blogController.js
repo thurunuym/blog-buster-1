@@ -48,16 +48,14 @@ exports.updateBlog = async (req, res) => {
     const blogId = req.params.id;
 
     try {
-        // 1. Check if blog exists and get author
         const [blogs] = await pool.execute('SELECT author_id FROM blogs WHERE id = ?', [blogId]);
         if (blogs.length === 0) return res.status(404).json({ error: 'Blog not found' });
 
-        // 2. Authorization: Owner or Admin
         if (blogs[0].author_id !== req.user.id && req.user.role !== 'Admin') {
             return res.status(403).json({ error: 'Not authorized to update this blog' });
         }
 
-        // 3. Update with new summary if content changed
+        
         const summary = createSummary(content);
         await pool.execute(
             'UPDATE blogs SET title = ?, content = ?, summary = ? WHERE id = ?',
