@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
-    const { username, email, password, role } = req.body; // role should be 'User' or 'Admin'
+    const { username, email, password, role } = req.body; // 'User' or 'Admin'
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const [result] = await pool.execute(

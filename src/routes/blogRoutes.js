@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const blogController = require('../controllers/blogController');
-const { authenticate, authorize } = require('../middlewares/auth');
+const { authenticate, authorize } = require('../middleware/auth');
 
 // Public: Anyone can read blogs
 router.get('/', blogController.getAllBlogs);
